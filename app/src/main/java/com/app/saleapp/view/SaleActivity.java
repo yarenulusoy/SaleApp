@@ -1,16 +1,16 @@
 package com.app.saleapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.app.saleapp.R;
-import com.app.saleapp.viewmodel.SaleViewModel;
-
+import com.app.saleapp.utils.DialogUtils;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class SaleActivity extends AppCompatActivity {
 
@@ -19,14 +19,24 @@ public class SaleActivity extends AppCompatActivity {
     private EditText priceEditText;
     private EditText vatRateEditText;
 
-    private SaleViewModel viewModel;
+
+    private final BroadcastReceiver responseReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int status = intent.getIntExtra("status", -1);
+            int paymentType = intent.getIntExtra("paymentType", -1);
+            Log.d("Activity", "Alınan cevap: " + status + " " + paymentType);
+            handlePaymentResponse(status, paymentType);
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
 
-        viewModel = new ViewModelProvider(this).get(SaleViewModel.class);
+        //SaleViewModel viewModel = new ViewModelProvider(this).get(SaleViewModel.class);
 
         productIdEditText = findViewById(R.id.editTextProductId);
         productNameEditText = findViewById(R.id.editTextProductName);
@@ -35,16 +45,29 @@ public class SaleActivity extends AppCompatActivity {
         Button cancelButton = findViewById(R.id.buttonCancel);
         Button submitButton = findViewById(R.id.buttonSubmit);
 
+        IntentFilter filter = new IntentFilter("RESPONSE_ACTION");
+        registerReceiver(responseReceiver, filter);
+
         cancelButton.setOnClickListener(v -> clearForm());
 
         submitButton.setOnClickListener(v -> {
             if (validateForm()) {
                 sendToRegistry();
             } else {
-                Toast.makeText(SaleActivity.this, "Please correct invalid values", Toast.LENGTH_SHORT).show();
-            }
+                DialogUtils.showDialog(this, "Please correct invalid values");
+                  }
         });
+
+
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(responseReceiver);
+    }
+
 
     private void clearForm() {
         productIdEditText.setText("");
@@ -53,7 +76,7 @@ public class SaleActivity extends AppCompatActivity {
         vatRateEditText.setText("");
     }
 
-    private boolean validateForm() {
+    private boolean validateForm() { //viewmodele alınacak
         String productId = productIdEditText.getText().toString();
         String productName = productNameEditText.getText().toString();
         String price = priceEditText.getText().toString();
@@ -101,18 +124,51 @@ public class SaleActivity extends AppCompatActivity {
         double price = Double.parseDouble(priceEditText.getText().toString());
         int vatRate = Integer.parseInt(vatRateEditText.getText().toString());
 
-        Intent intent = new Intent();
-        intent.setAction("com.app.registryApp.SALE_ACTION");
         Bundle bundle = new Bundle();
-
         bundle.putInt("PRODUCT_ID", productId);
         bundle.putString("PRODUCT_NAME", productName);
         bundle.putDouble("PRICE", price);
         bundle.putInt("VAT_RATE", vatRate);
 
+        Intent intent = new Intent("SALE_ACTION");
         intent.putExtras(bundle);
-        sendBroadcast(intent);
-
+        intent.setPackage("com.app.registryapp");
+        startForegroundService(intent);
 
     }
+
+    private void handlePaymentResponse(int status, int paymentType) {
+        if (status == 1) {
+            displayMessage("Tekrar Deneyiniz");
+        } else if (status == 2) {
+            clearForm();
+            displayMessage("İşlem İptal Edildi");
+        } else if (status == 3) {
+            clearForm();
+            displayPaymentMessage(paymentType);
+        }
+    }
+
+    private void displayMessage(String message) {
+        DialogUtils.showDialog(this, message);
+    }
+
+    private void displayPaymentMessage(int paymentType) {
+        String paymentMessage = "";
+        switch (paymentType) {
+            case 11:
+                paymentMessage = "Ödeme Tamamlandı, Ödeme Türü: Nakit";
+                break;
+            case 12:
+                paymentMessage = "Ödeme Tamamlandı, Ödeme Türü: Kredi";
+                break;
+            case 13:
+                paymentMessage = "Ödeme Tamamlandı, Ödeme Türü: Karekod";
+                break;
+            default:
+                break;
+        }
+        displayMessage(paymentMessage);
+    }
 }
+
