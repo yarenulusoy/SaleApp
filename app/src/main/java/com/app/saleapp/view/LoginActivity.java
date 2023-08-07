@@ -1,6 +1,5 @@
 package com.app.saleapp.view;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -11,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.app.saleapp.R;
 import com.app.saleapp.model.User;
+import com.app.saleapp.utils.DialogUtils;
 import com.app.saleapp.viewmodel.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordEditText.getText().toString();
 
             if (username.isEmpty() || password.isEmpty()) {
-                showDialog("Please Fill All The Fields");
+                DialogUtils.showDialog(this,"Please Fill All The Fields");
                 return;
             }
 
@@ -43,22 +43,15 @@ public class LoginActivity extends AppCompatActivity {
                 User user = new User(userId, password);
 
                 if (loginViewModel.isValidUser(user)) {
-                    Intent intent = new Intent(this, SaleActivity.class);
-                    startActivity(intent);
+                   Intent intent = new Intent(this, SaleActivity.class);
+                   startActivity(intent);
                 } else {
-                    showDialog("Invalid Username or Password");
+                    DialogUtils.showDialog(this,"Invalid Username or Password");
                 }
             } catch (NumberFormatException e) {
-                showDialog("Invalid Username or Password");
+                DialogUtils.showDialog(this,"Invalid Username or Password");
             }
         });
     }
 
-    private void showDialog(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message)
-                .setPositiveButton("Okey", null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 }
