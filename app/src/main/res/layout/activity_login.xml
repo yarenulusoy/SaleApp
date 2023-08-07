@@ -33,6 +33,7 @@
                 android:id="@+id/username"
                 android:hint="@string/login_userid_hint"
                 android:padding="8dp"
+                android:inputType="number"
                 android:layout_marginTop="40dp"/>
             <EditText
                 android:layout_width="match_parent"
