@@ -1,6 +1,6 @@
 # Sale and Pay System
 
-![Screenshot_20230809_130154_SaleApp](https://github.com/yarenulusoy/SaleApp/assets/45559372/82c22626-d285-4e52-ba08-e974777bf80a)
+![Screenshot_20230809_130154_SaleApp](https://github.com/yarenulusoy/SaleApp/assets/45559372/d2db3014-9d96-4916-bcc4-15fad2062b84)
 ![Screenshot_20230809_130244_SaleApp](https://github.com/yarenulusoy/SaleApp/assets/45559372/ba776724-da74-4434-aaa5-914801d4ec6a)
 ![Screenshot_20230809_130301_PaymentApp](https://github.com/yarenulusoy/SaleApp/assets/45559372/a9d83e5a-105a-43bc-9416-b326c404dcad)
 ![Screenshot_20230809_130324_SaleApp](https://github.com/yarenulusoy/SaleApp/assets/45559372/05ca2f58-0f74-4165-9d25-11b8600b5b92)
