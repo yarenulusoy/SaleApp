@@ -8,6 +8,15 @@
     android:padding="16dp"
     android:layout_gravity="center"
     tools:context=".view.SaleActivity">
+    <TextView
+        android:id="@+id/textViewSaleId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sale"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_margin="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,32 +54,39 @@
             android:inputType="number"
             android:layout_marginBottom="16dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/buttonSubmit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/submit"
-                android:layout_gravity="center"/>
 
-            <Button
-                android:id="@+id/buttonCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cancel"
-                android:layout_gravity="center"/>
-
-
-        </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
 
+        <Button
 
+            android:id="@+id/buttonSubmit"
+            android:layout_width="0dp"
+            android:layout_margin="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/submit"
+            android:textColor="@color/white"
+            android:background="@color/purple_700"
+            android:layout_gravity="center"/>
 
+        <Button
+            android:textColor="@color/white"
+            android:background="@color/purple_700"
+            android:id="@+id/buttonCancel"
+            android:layout_margin="20dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>

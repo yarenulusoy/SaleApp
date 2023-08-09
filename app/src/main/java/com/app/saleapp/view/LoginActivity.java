@@ -33,23 +33,11 @@ public class LoginActivity extends AppCompatActivity {
             String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            if (username.isEmpty() || password.isEmpty()) {
-                DialogUtils.showDialog(this,"Please Fill All The Fields");
-                return;
-            }
-
-            try {
-                int userId = Integer.parseInt(username);
-                User user = new User(userId, password);
-
-                if (loginViewModel.isValidUser(user)) {
-                   Intent intent = new Intent(this, SaleActivity.class);
-                   startActivity(intent);
-                } else {
-                    DialogUtils.showDialog(this,"Invalid Username or Password");
-                }
-            } catch (NumberFormatException e) {
-                DialogUtils.showDialog(this,"Invalid Username or Password");
+            if (loginViewModel.login(username, password)) {
+                Intent intent = new Intent(this, SaleActivity.class);
+                startActivity(intent);
+            } else {
+                DialogUtils.showDialog(this, "Invalid Username or Password");
             }
         });
     }

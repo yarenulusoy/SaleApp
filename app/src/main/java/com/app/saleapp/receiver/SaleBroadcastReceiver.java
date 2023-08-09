@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
-
+/*
 public class SaleBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -14,4 +14,4 @@ public class SaleBroadcastReceiver extends BroadcastReceiver {
             Log.d("Activity", "Alınan cevap: " + response);
         }
     }
-}
+}*/

@@ -28,4 +28,5 @@ public class Sale {
     public int getVatRate() {
         return vatRate;
     }
+
 }

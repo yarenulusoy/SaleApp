@@ -1,8 +1,10 @@
 package com.app.saleapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.app.saleapp.R;
 import com.app.saleapp.utils.DialogUtils;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -36,8 +38,6 @@ public class SaleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
 
-        //SaleViewModel viewModel = new ViewModelProvider(this).get(SaleViewModel.class);
-
         productIdEditText = findViewById(R.id.editTextProductId);
         productNameEditText = findViewById(R.id.editTextProductName);
         priceEditText = findViewById(R.id.editTextPrice);
@@ -51,11 +51,12 @@ public class SaleActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(v -> clearForm());
 
         submitButton.setOnClickListener(v -> {
+
             if (validateForm()) {
                 sendToRegistry();
             } else {
                 DialogUtils.showDialog(this, "Please correct invalid values");
-                  }
+            }
         });
 
 
@@ -119,6 +120,7 @@ public class SaleActivity extends AppCompatActivity {
 
 
     private void sendToRegistry() {
+        String packageName = "com.app.registryapp";
         int productId = Integer.parseInt(productIdEditText.getText().toString());
         String productName = productNameEditText.getText().toString();
         double price = Double.parseDouble(priceEditText.getText().toString());
@@ -131,9 +133,13 @@ public class SaleActivity extends AppCompatActivity {
         bundle.putInt("VAT_RATE", vatRate);
 
         Intent intent = new Intent("SALE_ACTION");
+        intent.setPackage(packageName);
         intent.putExtras(bundle);
-        intent.setPackage("com.app.registryapp");
+
+        // Servisi başlatın
         startForegroundService(intent);
+
+
 
     }
 
@@ -156,17 +162,17 @@ public class SaleActivity extends AppCompatActivity {
     private void displayPaymentMessage(int paymentType) {
         String paymentMessage = "";
         switch (paymentType) {
-            case 11:
+            case 1:
                 paymentMessage = "Ödeme Tamamlandı, Ödeme Türü: Nakit";
                 break;
-            case 12:
+            case 2:
                 paymentMessage = "Ödeme Tamamlandı, Ödeme Türü: Kredi";
                 break;
-            case 13:
+            case 3:
                 paymentMessage = "Ödeme Tamamlandı, Ödeme Türü: Karekod";
                 break;
             default:
-                break;
+                paymentMessage = "Ödeme Tamamlanmadı.";
         }
         displayMessage(paymentMessage);
     }

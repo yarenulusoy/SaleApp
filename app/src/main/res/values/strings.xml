@@ -2,12 +2,14 @@
     <string name="app_name">SaleApp</string>
     <string name="login_userid_hint">User Id</string>
     <string name="login_password_hint">Password</string>
-    <string name="login">LOGIN</string>
+    <string name="login">GİRİŞ YAP</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="hint_product_id">Product Id</string>
     <string name="hint_product_name">Product Name</string>
     <string name="hint_price">Price</string>
     <string name="hint_vat_rate">Vat Rate</string>
+    <string name="sale">SATIŞ BİLGİLERİ</string>
+
 
 </resources>
