@@ -2,44 +2,48 @@ package com.app.saleapp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.app.saleapp.R;
-import com.app.saleapp.model.User;
 import com.app.saleapp.utils.DialogUtils;
 import com.app.saleapp.viewmodel.LoginViewModel;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
+import com.app.saleapp.R;
+import com.app.saleapp.databinding.ActivityLoginBinding;
+
+
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText usernameEditText, passwordEditText;
+    private ActivityLoginBinding binding;
     private LoginViewModel loginViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        usernameEditText = findViewById(R.id.username);
-        passwordEditText = findViewById(R.id.password);
+        initViews();
+    }
 
+    private void initViews() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
-        Button loginButton = findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(v -> {
-            String username = usernameEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
+        binding.setViewModel(loginViewModel);
+        binding.setLifecycleOwner(this);
 
-            if (loginViewModel.login(username, password)) {
-                Intent intent = new Intent(this, SaleActivity.class);
-                startActivity(intent);
-            } else {
-                DialogUtils.showDialog(this, "Invalid Username or Password");
-            }
-        });
+        loginViewModel.loginSuccess.observe(this, this::login);
+    }
+
+    private void login(Boolean success) {
+        if (success) {
+            Intent intent = new Intent(LoginActivity.this, SaleActivity.class);
+            startActivity(intent);
+        } else {
+            DialogUtils.showDialog(LoginActivity.this, "Invalid Username or Password");
+        }
     }
 
 }

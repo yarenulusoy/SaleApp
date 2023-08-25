@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.app.saleapp.viewmodel.SaleViewModel" />
+    </data>
+
+
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:layout_gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/paddingMedium"
     tools:context=".view.SaleActivity">
+
     <TextView
         android:id="@+id/textViewSaleId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sale"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:layout_margin="@dimen/marginMedium"
         android:gravity="center"
-        android:layout_margin="20dp"/>
+        android:text="@string/sale"
+        android:textSize="@dimen/textSizeHigh"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,32 +38,36 @@
             android:id="@+id/editTextProductId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginLow"
             android:hint="@string/hint_product_id"
-            android:inputType="number"
-            android:layout_marginBottom="8dp"/>
+            android:text="@={viewModel.productId}"
+            android:inputType="number" />
 
         <EditText
             android:id="@+id/editTextProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_product_name"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="@dimen/marginLow"
+            android:text="@={viewModel.productName}"
+            android:hint="@string/hint_product_name" />
 
         <EditText
             android:id="@+id/editTextPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginLow"
+            android:text="@={viewModel.productPrice}"
             android:hint="@string/hint_price"
-            android:inputType="numberDecimal"
-            android:layout_marginBottom="8dp"/>
+            android:inputType="numberDecimal" />
 
         <EditText
             android:id="@+id/editTextVatRate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/marginMedium"
+            android:text="@={viewModel.productVat}"
             android:hint="@string/hint_vat_rate"
-            android:inputType="number"
-            android:layout_marginBottom="16dp"/>
+            android:inputType="number" />
 
 
     </LinearLayout>
@@ -64,29 +79,30 @@
         android:orientation="horizontal">
 
         <Button
-
             android:id="@+id/buttonSubmit"
-            android:layout_width="0dp"
-            android:layout_margin="20dp"
+            android:layout_width="@dimen/mediumWidth"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/marginMedium"
             android:layout_weight="1"
-            android:text="@string/submit"
-            android:textColor="@color/white"
+            android:onClick="@{() -> viewModel.onSubmitClick()}"
             android:background="@color/purple_700"
-            android:layout_gravity="center"/>
+            android:text="@string/submit"
+            android:textColor="@color/white" />
 
         <Button
-            android:textColor="@color/white"
-            android:background="@color/purple_700"
             android:id="@+id/buttonCancel"
-            android:layout_margin="20dp"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/mediumWidth"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/marginMedium"
             android:layout_weight="1"
+            android:onClick="@{() -> viewModel.clearForm()}"
+            android:background="@color/purple_700"
             android:text="@string/cancel"
-            android:layout_gravity="center"/>
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
 
-</LinearLayout>
+</LinearLayout></layout>
