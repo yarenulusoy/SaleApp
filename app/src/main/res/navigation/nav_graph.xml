@@ -1,0 +1,24 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.app.saleapp.view.LoginFragment"
+        android:label="Giriş Ekranı"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_login_to_sale"
+            app:destination="@id/saleFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/saleFragment"
+        android:name="com.app.saleapp.view.SaleFragment"
+        android:label="Satış Sayfası"
+        tools:layout="@layout/fragment_sale" />
+
+</navigation>

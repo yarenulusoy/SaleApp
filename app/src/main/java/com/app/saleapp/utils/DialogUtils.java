@@ -6,7 +6,6 @@ import android.content.Context;
 import com.app.saleapp.constants.Constants;
 
 public class DialogUtils {
-
     public static void showDialog(Context context, String message) {
         new AlertDialog.Builder(context)
                 .setMessage(message)

@@ -24,17 +24,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SaleApp"
         tools:targetApi="31">
+        <activity
+            android:name=".view.MainActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.SaleActivity"
             android:exported="true" />
         <activity
             android:name=".view.LoginActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         <receiver
@@ -46,7 +51,6 @@
                 <action android:name="com.example.RESPONSE_ACTION" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>
